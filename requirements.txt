@@ -1,0 +1,4 @@
+pillow
+tinify
+numpy
+futures
