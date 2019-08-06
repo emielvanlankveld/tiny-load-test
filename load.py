@@ -10,7 +10,7 @@ def with_concurrent(start):
         tasks = dict((executor.submit(handle_request_concurrent, i), i) for i in range(start,start+CYCLE))
         for request in futures.as_completed(tasks):
             count += 1
-            print '[{0}] Request {1}{2}'.format(datetime.datetime.now().strftime('%d-%m %H:%M:%S'),start+count,request.result())
+            print('[{0}] Request {1}{2}'.format(datetime.datetime.now().strftime('%d-%m %H:%M:%S'),start+count,request.result()))
     return start+CYCLE
 
 def handle_request_concurrent(i):
@@ -20,10 +20,10 @@ def handle_request_concurrent(i):
     image.save(name)
     try:
         source = tinify.from_file(name)
-        os.remove(name)
+        # os.remove(name)
         source.to_file("output-python/output_{0}.png".format(i))
         return ' succeeded. Compression count: {0}'.format(tinify.compression_count)
-    except Exception, e:
+    except Exception as e:
         return ' failed. {0}'.format(e)
 
 try: limit = sys.argv[1]
@@ -39,9 +39,9 @@ while start < limit or limit == 0:
     except: duration = time.time() - start_time
     times.append(round(duration,1))
 
-    print 'This cycle of {0} compressions took {1} seconds. Average so far: {2} seconds | Slowest: {3} seconds | Fastest: {4} seconds'.format(
+    print('This cycle of {0} compressions took {1} seconds. Average so far: {2} seconds | Slowest: {3} seconds | Fastest: {4} seconds'.format(
            CYCLE,
            round(duration,1),
            round(sum(times) / len(times),1),
            max(times),
-           min(times))
+           min(times)))
