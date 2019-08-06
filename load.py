@@ -20,7 +20,7 @@ def handle_request_concurrent(i):
     image.save(name)
     try:
         source = tinify.from_file(name)
-        # os.remove(name)
+        os.remove(name)
         source.to_file("output-python/output_{0}.png".format(i))
         return ' succeeded. Compression count: {0}'.format(tinify.compression_count)
     except Exception as e:
